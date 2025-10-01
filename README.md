@@ -113,7 +113,7 @@ automation:
     action:
       - service: tts.speak
         data:
-          message: "{{ state_attr('sensor.tianxing_zao_an_wan_an', 'morning') }}"
+          message: "{{ state_attr('sensor.zao_an_wan_an', 'morning') }}"
 ```
 
 ### 桌面通知显示每日一言
@@ -128,8 +128,8 @@ automation:
         data:
           message: >
             今日智慧：
-            历史：{{ state_attr('sensor.tianxing_mei_ri_yi_yan', 'history')['content'] }}
-            名句：{{ state_attr('sensor.tianxing_mei_ri_yi_yan', 'sentence')['content'] }}
+            历史：{{ state_attr('sensor.mei_ri_yi_yan', 'history')['content'] }}
+            名句：{{ state_attr('sensor.mei_ri_yi_yan', 'sentence')['content'] }}
           title: "每日一言"
 ```
 
