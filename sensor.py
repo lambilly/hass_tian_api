@@ -108,7 +108,9 @@ class TianxingRiddleJokeSensor(SensorEntity):
                 else:
                     joke_result = {}
                 
-                self._state = riddle_result.get("riddle", "未知谜语")
+                # 设置状态为更新时间
+                current_time = self._get_current_time()
+                self._state = current_time
                 self._available = True
                 
                 # 设置属性
@@ -128,7 +130,7 @@ class TianxingRiddleJokeSensor(SensorEntity):
                         "name": joke_result.get("title", ""),
                         "content": joke_result.get("content", "")
                     },
-                    "update_time": self._get_current_time()
+                    "update_time": current_time
                 }
                 
                 _LOGGER.info("天行数据谜语笑话更新成功")
@@ -241,7 +243,9 @@ class TianxingMorningEveningSensor(SensorEntity):
                 elif not evening_content.endswith("晚安"):
                     evening_content = f"{evening_content}晚安！"
                 
-                self._state = morning_content[:50] + "..." if len(morning_content) > 50 else morning_content
+                # 设置状态为更新时间
+                current_time = self._get_current_time()
+                self._state = current_time
                 self._available = True
                 
                 # 设置属性
@@ -252,7 +256,7 @@ class TianxingMorningEveningSensor(SensorEntity):
                     "morning": morning_content,
                     "etitle": "晚安心语",
                     "evening": evening_content,
-                    "update_time": self._get_current_time()
+                    "update_time": current_time
                 }
                 
                 _LOGGER.info("天行数据早安晚安更新成功")
@@ -360,8 +364,9 @@ class TianxingPoetrySensor(SensorEntity):
                 poetry_first = poetry_list[0] if poetry_list else {}
                 yuan_qu_first = yuan_qu_list[0] if yuan_qu_list else {}
                 
-                # 设置状态为唐诗内容
-                self._state = poetry_first.get("content", "未知诗词")[:50] + "..." if len(poetry_first.get("content", "")) > 50 else poetry_first.get("content", "未知诗词")
+                # 设置状态为更新时间
+                current_time = self._get_current_time()
+                self._state = current_time
                 self._available = True
                 
                 # 设置属性
@@ -390,7 +395,7 @@ class TianxingPoetrySensor(SensorEntity):
                         "note": yuan_qu_first.get("note", ""),
                         "translation": yuan_qu_first.get("translation", "")
                     },
-                    "update_time": self._get_current_time()
+                    "update_time": current_time
                 }
                 
                 _LOGGER.info("天行数据古诗宋词更新成功")
@@ -502,8 +507,9 @@ class TianxingDailyWordsSensor(SensorEntity):
                 couplet_result = couplet_data.get("result", {})
                 maxim_result = maxim_data.get("result", {})
                 
-                # 设置状态为历史内容
-                self._state = history_result.get("content", "未知内容")[:50] + "..." if len(history_result.get("content", "")) > 50 else history_result.get("content", "未知内容")
+                # 设置状态为更新时间
+                current_time = self._get_current_time()
+                self._state = current_time
                 self._available = True
                 
                 # 设置属性
@@ -527,7 +533,7 @@ class TianxingDailyWordsSensor(SensorEntity):
                         "content": maxim_result.get("en", ""),
                         "translate": maxim_result.get("zh", "")
                     },
-                    "update_time": self._get_current_time()
+                    "update_time": current_time
                 }
                 
                 _LOGGER.info("天行数据每日一言更新成功")
