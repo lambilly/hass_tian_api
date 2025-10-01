@@ -61,31 +61,31 @@ Home Assistant 需要启用自定义集成功能：
 
 集成会自动创建以下实体：
 
-- `sensor.tianxing_mi_yu_xiao_hua` - 谜语笑话
-- `sensor.tianxing_zao_an_wan_an` - 早安晚安  
-- `sensor.tianxing_gu_shi_song_ci` - 古诗宋词
-- `sensor.tianxing_mei_ri_yi_yan` - 每日一言
+- `sensor.mi_yu_xiao_hua` - 谜语笑话
+- `sensor.zao_an_wan_an` - 早安晚安  
+- `sensor.gu_shi_song_ci` - 古诗宋词
+- `sensor.mei_ri_yi_yan` - 每日一言
 
 所有实体都会归属于名为 **"天行信息查询"** 的设备。
 
 ## 实体属性说明
 
 ### 谜语笑话实体
-- **状态**: 当前谜语内容
+- **状态**: 最后更新时间
 - **属性**:
   - `riddle`: 谜语详细信息（内容、答案、类型等）
   - `joke`: 笑话详细信息（标题、内容）
   - `update_time`: 最后更新时间
 
 ### 早安晚安实体
-- **状态**: 早安内容摘要
+- **状态**: 最后更新时间
 - **属性**:
   - `morning`: 完整的早安心语
   - `evening`: 完整的晚安心语
   - `update_time`: 最后更新时间
 
 ### 古诗宋词实体
-- **状态**: 唐诗内容摘要
+- **状态**: 最后更新时间
 - **属性**:
   - `tangshi`: 唐诗详细信息（内容、作者、注释等）
   - `songci`: 宋词详细信息
@@ -93,7 +93,7 @@ Home Assistant 需要启用自定义集成功能：
   - `update_time`: 最后更新时间
 
 ### 每日一言实体
-- **状态**: 历史知识摘要
+- **状态**: 最后更新时间
 - **属性**:
   - `history`: 简说历史内容
   - `sentence`: 古籍名句
