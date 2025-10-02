@@ -1,9 +1,12 @@
 {
   "name": "天行数据API",
   "render_readme": true,
-  "domains": ["sensor", "switch"],
-  "homeassistant": "2023.1.0",
-  "zip_release": true,
-  "filename": "tianxing_api.zip"
-
+  "homeassistant": "2023.8.0",
+  "hide_default_branch": true,
+  "zip_release": false,
+  "filename": "tianxing_api.zip",
+  "country": ["CN"],
+  "domains": ["sensor"],
+  "iot_class": "Cloud Polling"
 }
+
