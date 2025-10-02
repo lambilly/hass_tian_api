@@ -1,0 +1,13 @@
+{
+  "domain": "tianxing_api",
+  "name": "天行数据API",
+  "version": "1.0.0",
+  "code_owners": ["@lambilly"],
+  "documentation": "https://github.com/lambilly/hass_tianxing_api",
+  "issue_tracker": "https://github.com/lambilly/hass_tianxing_api/issues",
+  "integration_type": "integration|device|service",
+  "requirements": [],
+  "dependencies": [],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}
