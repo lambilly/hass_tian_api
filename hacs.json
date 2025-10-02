@@ -4,5 +4,6 @@
   "domains": ["sensor", "switch"],
   "homeassistant": "2023.1.0",
   "zip_release": true,
-  "filename": "hass_tianxing_api.zip"
+  "filename": "tianxing_api.zip"
+
 }
