@@ -1,6 +1,10 @@
-custom_components/tianxing_api/
-├── __init__.py
-├── manifest.json
-├── config_flow.py
-├── sensor.py
-└── const.py
+tianxing_api/
+├── custom_components/
+│   └── tianxing_api/
+│       ├── __init__.py
+│       ├── manifest.json
+│       ├── config_flow.py
+│       ├── sensor.py
+│       └── const.py
+├── hacs.json
+└── README.md
