@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "设置天聚数行API",
+        "description": "请输入您的天聚数行API密钥",
+        "data": {
+          "api_key": "API密钥"
+        }
+      }
+    },
+    "error": {
+      "invalid_api_key_format": "API密钥格式不正确，应为32位字符串"
+    },
+    "abort": {
+      "already_configured": "此API密钥已被配置"
+    }
+  }
+}
