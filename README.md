@@ -33,7 +33,7 @@ Home Assistant 需要启用自定义集成功能：
 ### 方法一：通过 HACS 安装（推荐）
 1. 确保已安装 [HACS](https://hacs.xyz/)
 2. 在 HACS 的 "Integrations" 页面，点击右上角的三个点菜单，选择 "Custom repositories"
-3. 在弹出窗口中添加仓库地址：https://github.com/lambilly/hass_tian_api，类别选择 "Integration"
+3. 在弹出窗口中添加仓库地址：https://github.com/lambilly/hass_tian_api/ ，类别选择 "Integration"
 4. 在 HACS 中搜索 "天聚数行API"
 5. 点击下载
 6. 重启 Home Assistant
