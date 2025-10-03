@@ -1,4 +1,6 @@
-# 天行数据API集成
+# 天行数据API HomeAssistant 集成
+
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 这是一个 Home Assistant 自定义集成，用于从[天行数据](https://www.tianapi.com/)获取各类文化资讯内容。
 
