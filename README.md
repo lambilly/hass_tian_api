@@ -1,5 +1,7 @@
 # 天行数据API Home Assistant 集成
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+
 这是一个为 Home Assistant 开发的定制集成，用于从[天行数据](https://www.tianapi.com/)获取各类文化资讯内容，包括谜语笑话、早安晚安、古诗宋词和每日一言等。
 
 ## 功能特点
