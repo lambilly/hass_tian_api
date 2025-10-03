@@ -1,8 +1,8 @@
-# 天行数据API Home Assistant 集成
+# 天聚数行API Home Assistant 集成
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
-这是一个为 Home Assistant 开发的定制集成，用于从[天行数据](https://www.tianapi.com/)获取各类文化资讯内容，包括谜语笑话、早安晚安、古诗宋词和每日一言等。
+这是一个为 Home Assistant 开发的定制集成，用于从[天聚数行](https://www.tianapi.com/)获取各类文化资讯内容，包括谜语笑话、早安晚安、古诗宋词和每日一言等。
 
 ## 功能特点
 
@@ -15,9 +15,9 @@
 
 ### 1. 获取 API 密钥
 
-在使用本集成前，您需要先申请天行数据的 API 密钥：
+在使用本集成前，您需要先申请天聚数行的 API 密钥：
 
-1. 访问 [天行数据官网](https://www.tianapi.com/)
+1. 访问 [天聚数行官网](https://www.tianapi.com/)
 2. 注册账号并登录
 3. 进入控制台，申请 API 密钥
 4. 确保您的账户有足够的调用次数（免费版本通常有每日限制）
@@ -34,14 +34,14 @@ Home Assistant 需要启用自定义集成功能：
 ### 方法一：通过 HACS 安装（推荐）
 
 1. 确保已安装 [HACS](https://hacs.xyz/)
-2. 在 HACS 中搜索 "天行数据API"
+2. 在 HACS 中搜索 "天聚数行API"
 3. 点击安装
 4. 重启 Home Assistant
 
 ### 方法二：手动安装
 
 1. 下载本集成文件
-2. 将 `custom_components/tianxing_api` 文件夹复制到您的 Home Assistant 配置目录中的 `custom_components` 文件夹内
+2. 将 `custom_components/tian_api` 文件夹复制到您的 Home Assistant 配置目录中的 `custom_components` 文件夹内
 3. 重启 Home Assistant
 
 ## 配置步骤
@@ -50,12 +50,12 @@ Home Assistant 需要启用自定义集成功能：
 
 1. 进入 Home Assistant 的 **设置** → **设备与服务** → **集成**
 2. 点击右下角的 **添加集成** 按钮
-3. 搜索 "天行数据API"
+3. 搜索 "天聚数行API"
 4. 点击进入配置界面
 
 ### 2. 输入 API 密钥
 
-1. 在弹出的对话框中输入您从天行数据获取的 API 密钥
+1. 在弹出的对话框中输入您从天聚数行获取的 API 密钥
 2. API 密钥应为 32 位字符串
 3. 点击 **提交**
 
@@ -68,7 +68,7 @@ Home Assistant 需要启用自定义集成功能：
 - `sensor.gu_shi_song_ci` - 古诗宋词
 - `sensor.mei_ri_yi_yan` - 每日一言
 
-所有实体都会归属于名为 **"天行信息查询"** 的设备。
+所有实体都会归属于名为 **"天聚信息查询"** 的设备。
 
 ## 实体属性说明
 
@@ -146,7 +146,7 @@ automation:
 
 2. **数据不更新**
    - 确认 API 密钥有效且未过期
-   - 检查天行数据账户的调用次数限制
+   - 检查天聚数行账户的调用次数限制
    - 等待下一个自动更新周期（24小时）
 
 3. **实体不可用**
@@ -167,7 +167,7 @@ logger:
 
 ## API 调用说明
 
-本集成使用以下天行数据 API 接口：
+本集成使用以下天聚数行 API 接口：
 
 - `caizimi/index` - 谜语
 - `joke/index` - 笑话
@@ -187,7 +187,7 @@ logger:
 
 1. 查看本 README 文档
 2. 检查 Home Assistant 日志
-3. 访问 [天行数据官方文档](https://www.tianapi.com/)
+3. 访问 [天聚数行官方文档](https://www.tianapi.com/)
 4. 在项目 Issues 页面提交问题
 
 ## 版本历史
@@ -196,4 +196,4 @@ logger:
 
 ## 免责声明
 
-本集成为第三方开发，与天行数据官方无关。使用本集成需要遵守天行数据的 API 使用条款和调用限制。
+本集成为第三方开发，与天聚数行官方无关。使用本集成需要遵守天聚数行的 API 使用条款和调用限制。
