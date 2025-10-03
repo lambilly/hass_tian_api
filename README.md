@@ -30,16 +30,15 @@ Home Assistant 需要启用自定义集成功能：
 2. 确认已启用高级模式（在用户配置文件中设置）
 
 ## 安装方法
-
 ### 方法一：通过 HACS 安装（推荐）
-
 1. 确保已安装 [HACS](https://hacs.xyz/)
-2. 在 HACS 中搜索 "天聚数行API"
-3. 点击安装
-4. 重启 Home Assistant
+2. 在 HACS 的 "Integrations" 页面，点击右上角的三个点菜单，选择 "Custom repositories"
+3. 在弹出窗口中添加仓库地址：https://github.com/lambilly/hass_tian_api，类别选择 "Integration"
+4. 在 HACS 中搜索 "天聚数行API"
+5. 点击下载
+6. 重启 Home Assistant
 
 ### 方法二：手动安装
-
 1. 下载本集成文件
 2. 将 `custom_components/tian_api` 文件夹复制到您的 Home Assistant 配置目录中的 `custom_components` 文件夹内
 3. 重启 Home Assistant
