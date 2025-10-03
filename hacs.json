@@ -1,12 +1,11 @@
 {
-  "name": "天行数据API",
+  "name": "天聚数行API",
   "render_readme": true,
   "homeassistant": "2023.8.0",
   "hide_default_branch": true,
   "zip_release": false,
-  "filename": "tianxing_api.zip",
+  "filename": "tian_api.zip",
   "country": ["CN"],
   "domains": ["sensor"],
   "iot_class": "Cloud Polling"
 }
-
