@@ -547,7 +547,6 @@ class TianPoetrySensor(SensorEntity):
         from datetime import datetime
         return int(datetime.now().timestamp())
 
-
 class TianDailyWordsSensor(SensorEntity):
     """天聚数行每日一言传感器."""
 
@@ -590,11 +589,11 @@ class TianDailyWordsSensor(SensorEntity):
             maxim_data = await self._fetch_cached_data("maxim", self._fetch_maxim_data)
             
             if history_data and sentence_data and couplet_data and maxim_data:
-                # 处理数据
-                history_result = history_data.get("result", {})
-                sentence_result = sentence_data.get("result", {})
-                couplet_result = couplet_data.get("result", {})
-                maxim_result = maxim_data.get("result", {})
+                # 处理数据 - 修复列表和字典的混合结构
+                history_result = self._extract_result(history_data)
+                sentence_result = self._extract_result(sentence_data)
+                couplet_result = self._extract_result(couplet_data)
+                maxim_result = self._extract_result(maxim_data)
                 
                 # 设置状态为更新时间
                 current_time = self._get_current_time()
@@ -636,6 +635,31 @@ class TianDailyWordsSensor(SensorEntity):
             _LOGGER.error("更新天聚数行每日一言传感器时出错: %s", e)
             self._available = False
             self._state = f"更新失败: {str(e)}"
+
+    def _extract_result(self, data):
+        """从API响应数据中提取result字段，处理可能的列表结构."""
+        if not data:
+            return {}
+            
+        result = data.get("result", {})
+        
+        # 如果result是列表，取第一个元素
+        if isinstance(result, list):
+            if result:
+                _LOGGER.debug("检测到列表结构的result，使用第一个元素")
+                return result[0]
+            else:
+                _LOGGER.warning("result列表为空")
+                return {}
+        
+        # 如果result是字典，直接返回
+        elif isinstance(result, dict):
+            return result
+        
+        # 其他情况返回空字典
+        else:
+            _LOGGER.warning("未知的result类型: %s", type(result))
+            return {}
 
     async def _fetch_history_data(self):
         """获取历史数据."""
