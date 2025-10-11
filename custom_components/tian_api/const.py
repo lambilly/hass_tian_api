@@ -2,7 +2,7 @@
 
 DOMAIN = "tian_api"
 NAME = "天聚数行API"
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 CONF_API_KEY = "api_key"
 

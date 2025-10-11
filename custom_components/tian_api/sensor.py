@@ -63,7 +63,11 @@ async def async_setup_entry(
         TianScrollingContentSensor(api_key, device_info, config_entry.entry_id),
     ]
     
+    # 设置 update_before_add=True 确保首次添加时立即更新数据
     async_add_entities(sensors, update_before_add=True)
+    
+    # 记录集成加载成功
+    _LOGGER.info("天聚数行集成 v1.1.0 加载成功，实体已创建并开始首次更新")
 
 
 class TianRiddleJokeSensor(SensorEntity):
@@ -264,16 +268,16 @@ class TianMorningEveningSensor(SensorEntity):
                 morning_content = morning_data.get("result", {}).get("content", "")
                 evening_content = evening_data.get("result", {}).get("content", "")
                 
-                # 处理早安内容
+                # 优化早安内容处理逻辑
                 if not morning_content or morning_content == "":
                     morning_content = "早安！新的一天开始了！"
-                elif not morning_content.startswith("早安"):
+                elif "早安" not in morning_content:
                     morning_content = f"早安！{morning_content}"
                 
-                # 处理晚安内容
+                # 优化晚安内容处理逻辑
                 if not evening_content or evening_content == "":
                     evening_content = "晚安！好梦！"
-                elif not evening_content.endswith("晚安"):
+                elif "晚安" not in evening_content:
                     evening_content = f"{evening_content}晚安！"
                 
                 # 设置状态为更新时间
@@ -374,7 +378,6 @@ class TianMorningEveningSensor(SensorEntity):
         """获取当前时间戳."""
         from datetime import datetime
         return int(datetime.now().timestamp())
-
 
 class TianPoetrySensor(SensorEntity):
     """天聚数行古诗宋词传感器."""
@@ -605,21 +608,21 @@ class TianDailyWordsSensor(SensorEntity):
                     "title": "每日一言",
                     "history": {
                         "subtitle": "简说历史",
-                        "content": history_result.get("content", "")
+                        "content": history_result.get("content", "暂无历史内容")
                     },
                     "sentence": {
                         "subtitle": "古籍名句",
-                        "content": sentence_result.get("content", ""),
-                        "source": sentence_result.get("source", "")
+                        "content": sentence_result.get("content", "暂无名句内容"),
+                        "source": sentence_result.get("source", "未知来源")
                     },
                     "couplet": {
                         "subtitle": "经典对联",
-                        "content": couplet_result.get("content", "")
+                        "content": couplet_result.get("content", "暂无对联内容")
                     },
                     "maxim": {
                         "subtitle": "英文格言",
-                        "content": maxim_result.get("en", ""),
-                        "translate": maxim_result.get("zh", "")
+                        "content": maxim_result.get("en", "No maxim available"),
+                        "translate": maxim_result.get("zh", "暂无格言")
                     },
                     "update_time": current_time
                 }
@@ -639,17 +642,18 @@ class TianDailyWordsSensor(SensorEntity):
     def _extract_result(self, data):
         """从API响应数据中提取result字段，处理可能的列表结构."""
         if not data:
+            _LOGGER.warning("传入的数据为空")
             return {}
             
         result = data.get("result", {})
         
-        # 如果result是列表，取第一个元素
+        # 如果result是列表
         if isinstance(result, list):
             if result:
                 _LOGGER.debug("检测到列表结构的result，使用第一个元素")
                 return result[0]
             else:
-                _LOGGER.warning("result列表为空")
+                _LOGGER.warning("result列表为空，返回默认值")
                 return {}
         
         # 如果result是字典，直接返回
@@ -658,7 +662,7 @@ class TianDailyWordsSensor(SensorEntity):
         
         # 其他情况返回空字典
         else:
-            _LOGGER.warning("未知的result类型: %s", type(result))
+            _LOGGER.warning("未知的result类型: %s，返回默认值", type(result))
             return {}
 
     async def _fetch_history_data(self):
@@ -714,6 +718,12 @@ class TianDailyWordsSensor(SensorEntity):
                     
                     # 检查API返回的错误码
                     if data.get("code") == 200:
+                        # 检查result字段是否为空
+                        result = data.get("result")
+                        if not result or (isinstance(result, list) and len(result) == 0):
+                            _LOGGER.warning("API返回空结果: %s", url)
+                            # 仍然返回数据，但标记为需要处理
+                            return data
                         return data
                     elif data.get("code") == 130:  # 频率限制
                         _LOGGER.warning("API调用频率超限，请稍后再试")
@@ -741,7 +751,7 @@ class TianDailyWordsSensor(SensorEntity):
         """获取当前时间戳."""
         from datetime import datetime
         return int(datetime.now().timestamp())
-
+        
 class TianScrollingContentSensor(SensorEntity):
     """天聚数行滚动内容传感器."""
 
@@ -752,7 +762,7 @@ class TianScrollingContentSensor(SensorEntity):
         self._attr_unique_id = f"{entry_id}_scrolling_content"
         self._attr_device_info = device_info
         self._attr_icon = "mdi:message-text"
-        self._state = "等待数据"
+        self._state = self._get_current_time()  # 初始状态设为当前时间
         self._attributes = {}
         self._available = True
         self._current_time_slot = None
@@ -776,6 +786,10 @@ class TianScrollingContentSensor(SensorEntity):
 
     async def async_update(self):
         """Update sensor data - 使用缓存数据，避免频繁调用API."""
+        # 首先更新状态为当前时间
+        current_time = self._get_current_time()
+        self._state = current_time
+        
         try:
             # 检查缓存数据是否可用
             if not self._is_cache_ready():
@@ -783,12 +797,12 @@ class TianScrollingContentSensor(SensorEntity):
                 if self._retry_count <= self._max_retries:
                     _LOGGER.warning("滚动内容：等待其他传感器数据更新 (重试 %d/%d)", 
                                    self._retry_count, self._max_retries)
-                    self._state = f"等待数据({self._retry_count}/{self._max_retries})"
+                    # 状态已经是当前时间，不需要修改
                     return
                 else:
                     _LOGGER.error("滚动内容：无法获取数据，已达到最大重试次数")
-                    self._state = "数据获取失败"
                     self._available = False
+                    # 状态仍然是当前时间，但实体变为不可用
                     return
 
             # 重置重试计数
@@ -840,9 +854,7 @@ class TianScrollingContentSensor(SensorEntity):
                 riddle_result
             )
             
-            # 设置状态和属性
-            current_time = self._get_current_time()
-            self._state = scrolling_content["title"]
+            # 设置属性
             self._available = True
             
             self._attributes = {
@@ -862,7 +874,7 @@ class TianScrollingContentSensor(SensorEntity):
         except Exception as e:
             _LOGGER.error("更新天聚数行滚动内容传感器时出错: %s", e)
             self._available = False
-            self._state = f"更新失败: {str(e)}"
+            # 状态仍然是当前时间，不需要修改
 
     def _is_cache_ready(self):
         """检查缓存数据是否就绪."""
@@ -907,11 +919,11 @@ class TianScrollingContentSensor(SensorEntity):
         total_minutes = now.hour * 60 + now.minute
         
         # 处理早安内容
-        if not morning_content.startswith("早安"):
+        if "早安" not in morning_content:
             morning_content = f"早安！{morning_content}"
         
         # 处理晚安内容
-        if not evening_content.endswith("晚安"):
+        if "晚安" not in evening_content:
             evening_content = f"{evening_content}晚安！"
         
         # 处理笑话数据
