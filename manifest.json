@@ -1,0 +1,12 @@
+{
+  "domain": "tian_api",
+  "name": "天聚数行API",
+  "version": "1.1.2",
+  "code_owners": ["@lambilly"],
+  "documentation": "https://github.com/lambilly/hass_tian_api",
+  "issue_tracker": "https://github.com/lambilly/hass_tian_api/issues",
+  "requirements": [],
+  "dependencies": [],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}
