@@ -1,12 +1,9 @@
-hass_tian_api/
-├── custom_components/
-│   └── tian_api/
-│       ├── __init__.py
-│       ├── manifest.json
-│       ├── config_flow.py
-│       ├── sensor.py
-│       └── const.py
-├── hacs.json
-├── INFO.md
-└── README.md
-
+custom_components/
+└── tian_api/
+    ├── __init__.py
+    ├── manifest.json
+    ├── config_flow.py
+    ├── sensor.py
+    ├── translations/
+    │   └── zh-Hans.json
+    └── const.py
